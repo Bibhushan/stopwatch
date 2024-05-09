@@ -42,7 +42,7 @@ export default function StopWatch(){
     return (
         <div className='main-page'>
             <h1>Stopwatch</h1>
-            <p>Time: {" " + minutes + ":" + seconds}</p>
+            <p>Time:{" " + minutes + ":" + seconds}</p>
             <button onClick={handleStartTimer}>{timerOn ? 'Stop' : 'Start'}</button>
             <button onClick={handleTimerReset}>Reset</button>
         </div>
