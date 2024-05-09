@@ -10,8 +10,8 @@ export default function StopWatch(){
     const [timerOn, setTimerOn] = useState(false);
 
     const handleStartTimer = ()=>{
-        setTimerOn(true);
-        console.log('timer turned on')
+        setTimerOn(!timerOn);
+        console.log('timer turned on: ', timerOn);
     }
 
     const handleTimerReset = ()=>{
@@ -28,7 +28,9 @@ export default function StopWatch(){
             timer = setInterval(() => {
                 setTime(time+1);                
             }, 1000);
-
+        } 
+        else {
+            clearInterval(timer);
         }
 
         setMinutes(Math.floor(time/60));
@@ -41,7 +43,7 @@ export default function StopWatch(){
         <div className='main-page'>
             <h1>Stopwatch</h1>
             <p>Time: {" " + minutes + ":" + seconds}</p>
-            <button onClick={handleStartTimer}>Start</button>
+            <button onClick={handleStartTimer}>{timerOn ? 'Stop' : 'Start'}</button>
             <button onClick={handleTimerReset}>Reset</button>
         </div>
     )
