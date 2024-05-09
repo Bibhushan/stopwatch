@@ -5,18 +5,20 @@ import './StopWatch.css';
 export default function StopWatch(){
 
     const [time, setTime] = useState(0);
-    const [minutes, setMinutes] = useState(0);
-    const [seconds, setSeconds] = useState('00');
+    const [timeText, setTimeText] = useState('Time: 0:00');
     const [timerOn, setTimerOn] = useState(false);
 
     const handleStartTimer = ()=>{
         setTimerOn(!timerOn);
-        console.log('timer turned on: ', timerOn);
+        if (timerOn){
+            setTime(time+1);
+        }
+        // console.log('timer turned on: ', timerOn);
     }
 
     const handleTimerReset = ()=>{
         setTime(0);
-        console.log('timer reset')
+        // console.log('timer reset')
         setTimerOn(false);
     }
 
@@ -33,8 +35,9 @@ export default function StopWatch(){
             clearInterval(timer);
         }
 
-        setMinutes(Math.floor(time/60));
-        setSeconds(("0" +  (time%60)).slice(-2));
+        setTimeText(`Time: ${Math.floor(time/60)}:${("0" +  (time%60)).slice(-2)}`)
+        // setMinutes(Math.floor(time/60));
+        // setSeconds(("0" +  (time%60)).slice(-2));
 
         return ()=>clearInterval(timer)
     }, [timerOn, time])
@@ -42,7 +45,7 @@ export default function StopWatch(){
     return (
         <div className='main-page'>
             <h1>Stopwatch</h1>
-            <p>Time:{" " + minutes + ":" + seconds}</p>
+            <p>{timeText}</p>
             <button onClick={handleStartTimer}>{timerOn ? 'Stop' : 'Start'}</button>
             <button onClick={handleTimerReset}>Reset</button>
         </div>
