@@ -5,14 +5,13 @@ import './StopWatch.css';
 export default function StopWatch(){
 
     const [time, setTime] = useState(0);
-    const [timeText, setTimeText] = useState('Time: 0:00');
     const [timerOn, setTimerOn] = useState(false);
 
     const handleStartTimer = ()=>{
         setTimerOn(!timerOn);
-        if (timerOn){
-            setTime(time+1);
-        }
+        // if (timerOn){
+        //     setTime(time+1);
+        // }
         // console.log('timer turned on: ', timerOn);
     }
 
@@ -24,7 +23,7 @@ export default function StopWatch(){
 
     useEffect(()=>{
 
-        let timer;
+        let timer = null;
 
         if (timerOn){
             timer = setInterval(() => {
@@ -35,17 +34,19 @@ export default function StopWatch(){
             clearInterval(timer);
         }
 
-        setTimeText(`Time: ${Math.floor(time/60)}:${("0" +  (time%60)).slice(-2)}`)
-        // setMinutes(Math.floor(time/60));
-        // setSeconds(("0" +  (time%60)).slice(-2));
-
         return ()=>clearInterval(timer)
-    }, [timerOn, time])
+    }, [timerOn, time]);
+
+    const getTimeText=(time)=>{
+        return (
+            `${Math.floor(time/60)}:${("0" +  (time%60)).slice(-2)}`
+        )
+    };
  
     return (
         <div className='main-page'>
             <h1>Stopwatch</h1>
-            <p>{timeText}</p>
+            <p>Time: {getTimeText(time)}</p>
             <button onClick={handleStartTimer}>{timerOn ? 'Stop' : 'Start'}</button>
             <button onClick={handleTimerReset}>Reset</button>
         </div>
